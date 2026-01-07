@@ -334,4 +334,63 @@ class Solution {
     }
 }
 
+// Approch 2
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+
+        int K = 10;
+
+        // Agar string ki length 10 ya usse kam hai
+        // to koi repeated DNA sequence possible nahi
+        if (s.length() <= K) return new ArrayList<>();
+
+        // DNA characters ko base-4 numbers me map karna
+        // A -> 0, C -> 1, G -> 2, T -> 3
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('A', 0);
+        map.put('C', 1);
+        map.put('G', 2);
+        map.put('T', 3);
+
+        // Pehle dekhe gaye encoded values store karne ke liye
+        Set<Integer> seen = new HashSet<>();
+
+        // Repeated DNA sequences store karne ke liye
+        Set<String> result = new HashSet<>();
+
+        int rep = 0;
+
+        // 4^(K-1) = base value for removing leftmost character
+        int base = (int) Math.pow(4, K - 1);
+
+        // First window (length = 10) ka encoded value
+        for (int i = 0; i < K; i++) {
+            rep = rep * 4 + map.get(s.charAt(i));
+        }
+
+        seen.add(rep);
+
+        // Sliding window start
+        for (int i = K; i < s.length(); i++) {
+
+            // Leftmost character ka contribution remove karo
+            rep = rep - map.get(s.charAt(i - K)) * base;
+
+            // Left shift (multiply by 4)
+            rep = rep * 4;
+
+            // Naya character add karo
+            rep = rep + map.get(s.charAt(i));
+
+            // Agar pehle dekha hua hai → repeated sequence
+            if (seen.contains(rep)) {
+                result.add(s.substring(i - K + 1, i + 1));
+            }
+
+            seen.add(rep);
+        }
+
+        return new ArrayList<>(result);
+    }
+}
 
