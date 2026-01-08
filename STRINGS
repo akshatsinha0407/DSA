@@ -472,3 +472,65 @@ class Solution {
     }
 }
 
+
+// 28 by kmps
+class Solution {
+    public int strStr(String haystack, String needle) {
+
+        // edge case
+        if (needle.length() == 0) return 0;
+
+        int n = haystack.length();
+        int m = needle.length();
+
+        // --------------------
+        // STEP 1: LPS array banao
+        // --------------------
+        int[] lps = new int[m];
+        int len = 0; // previous longest prefix-suffix
+        int i = 1;
+
+        while (i < m) {
+            if (needle.charAt(i) == needle.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len > 0) {
+                    len = lps[len - 1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        // --------------------
+        // STEP 2: Pattern matching
+        // --------------------
+        i = 0; // haystack pointer
+        int j = 0; // needle pointer
+
+        while (i < n) {
+            if (haystack.charAt(i) == needle.charAt(j)) {
+                i++;
+                j++;
+            }
+
+            if (j == m) {
+                // pattern mil gaya
+                return i - j;
+            } 
+            else if (i < n && haystack.charAt(i) != needle.charAt(j)) {
+                if (j > 0) {
+                    j = lps[j - 1];
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        return -1;
+    }
+}
+
