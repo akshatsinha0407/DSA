@@ -129,3 +129,24 @@ class Solution {
         return count;
     }
 }
+
+//1358. Number of Substrings Containing All Three Characters
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int[] freq = new int[3]; // a, b, c
+        int l = 0, count = 0;
+        int n = s.length();
+
+        for (int r = 0; r < n; r++) {
+            freq[s.charAt(r) - 'a']++;
+
+            while (freq[0] > 0 && freq[1] > 0 && freq[2] > 0) {
+                count += (n - r);
+                freq[s.charAt(l) - 'a']--;
+                l++;
+            }
+        }
+        return count;
+    }
+}
+
