@@ -215,3 +215,37 @@ class Solution {
         return count;
     }
 }
+
+//76. Minimum Window Substring
+class Solution {
+    public String minWindow(String s, String t) {
+        int hash[] = new int [128];
+        // initilaze
+        for(char ch : t.toCharArray()){
+            hash[ch]++;
+        }
+        // varible
+        int st=0 , l = 0  , min = Integer.MAX_VALUE , cnt =0 , m =t.length();
+        // base travrse
+        for(int r=0 ; r < s.length() ; r++){
+            if(hash[s.charAt(r)]>0){
+                cnt++;
+            }
+            hash[s.charAt(r)]--;
+
+            //shriking
+            while(cnt == m){
+                if(r-l+1 < min){
+                    min = r-l+1;
+                    st = l;
+                }
+                hash[s.charAt(l)]++;
+                if( hash[s.charAt(l)] >0){
+                    cnt =cnt-1;
+                }
+                l++;
+            }
+        }
+        return  min== Integer.MAX_VALUE ? "" :  s.substring(st, st + min);
+    }
+}
