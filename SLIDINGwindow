@@ -1,3 +1,9 @@
+☐ array / string?
+☐ contiguous?
+☐ max / min / count?
+☐ K / constraint?
+☐ brute force O(n²)?
+ 
 //
 // 	Longest Substring Without Repeating Characters
 class Solution {
