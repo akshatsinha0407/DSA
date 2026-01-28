@@ -287,5 +287,4 @@ class StackUsingQueueArray {
         System.out.println("Size: " + s.size());
     }
 }
-
-
+^^^Implement Queue using Stack
