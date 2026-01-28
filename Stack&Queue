@@ -1,4 +1,4 @@
-// 
+// Check for balanced paranthesis
 class Solution {
     public boolean isValid(String s) {
          Stack<Character> st = new Stack<>();
@@ -22,4 +22,34 @@ class Solution {
         return true;
     }
 }
-//
+// Implement Min Stack
+class MinStack {
+    Stack<Integer> actual;
+    Stack<Integer> min;
+    public MinStack() {
+        actual = new Stack<>();
+        min = new Stack<>();
+    }
+    
+    public void push(int val) {
+        actual.push(val);
+        if(min.isEmpty() || val<=min.peek()){
+            min.push(val);
+        }
+    }
+    
+    public void pop() {
+        int popped = actual.pop();
+        if(popped == min.peek()){
+            min.pop();
+        }
+    }
+    
+    public int top() {
+      return  actual.peek();
+    }
+    
+    public int getMin() {
+        return min.peek();
+    }
+}
