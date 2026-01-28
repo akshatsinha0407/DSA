@@ -83,6 +83,107 @@ class StackArray {
     }
 }
 ^^^Implement Queue using Arrays
+class CircularQueue {
+    int[] arr;
+    int front, rear, count, n;
+
+    // Constructor
+    CircularQueue(int n) {
+        this.n = n;
+        arr = new int[n];
+        front = 0;
+        rear = 0;
+        count = 0;
+    }
+
+    // Check empty
+    boolean isEmpty() {
+        return count == 0;
+    }
+
+    // Check full
+    boolean isFull() {
+        return count == n;
+    }
+
+    // Enqueue
+    void enqueue(int elem) {
+        if (isFull()) {
+            System.out.println("Queue Overflow");
+            return;
+        }
+
+        arr[rear % n] = elem;
+        rear++;
+        count++;
+
+        System.out.println(elem + " enqueued");
+    }
+
+    // Dequeue
+    void dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue Underflow");
+            return;
+        }
+
+        System.out.println(arr[front % n] + " dequeued");
+        front++;
+        count--;
+    }
+
+    // Peek
+    void peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+            return;
+        }
+
+        System.out.println("Front element is: " + arr[front % n]);
+    }
+
+    // Size
+    int size() {
+        return count;
+    }
+
+    // Display
+    void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+            return;
+        }
+
+        System.out.print("Queue elements: ");
+        for (int i = 0; i < count; i++) {
+            System.out.print(arr[(front + i) % n] + " ");
+        }
+        System.out.println();
+    }
+
+    // Main
+    public static void main(String[] args) {
+        CircularQueue q = new CircularQueue(5);
+
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+        q.display();
+
+        q.dequeue();
+        q.dequeue();
+        q.display();
+
+        q.enqueue(40);
+        q.enqueue(50);
+        q.enqueue(60);
+        q.display();
+
+        q.peek();
+        System.out.println("Queue size: " + q.size());
+    }
+}
+
 ^^^Implement Stack using Queue
 class StackUsingQueueArray {
 
