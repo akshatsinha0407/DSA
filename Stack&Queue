@@ -93,7 +93,34 @@ class Solution {
         return res;
     }
 }
-//
+//nextSmallerEle
+class Solution {
+    static ArrayList<Integer> nextSmallerEle(int[] arr) {
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        Stack<Integer> stk = new Stack<>();
+
+      
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int curr = arr[i];
+
+         
+            while (!stk.isEmpty() && curr <= stk.peek()) {
+                stk.pop();
+            }
+
+            int res = stk.isEmpty() ? -1 : stk.peek();
+            ans.add(res);      
+
+            stk.push(curr);
+        }
+
+       )
+        Collections.reverse(ans);
+        return ans;
+    }
+}
+
 
 // prevSmaller
 class Solution {
