@@ -93,3 +93,26 @@ class Solution {
         return res;
     }
 }
+//
+
+// prevSmaller
+class Solution {
+    public static ArrayList<Integer> prevSmaller(int[] arr) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        Stack<Integer> stk = new Stack<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            int curr = arr[i];
+
+            while (!stk.isEmpty() && curr <= stk.peek()) {
+                stk.pop();
+            }
+
+            int prev = stk.isEmpty() ? -1 : stk.peek();
+            ans.add(prev);
+
+            stk.push(curr);
+        }
+        return ans;
+    }
+}
