@@ -328,3 +328,35 @@ class Solution {
     }
 }
 
+// removeKdigits
+class Solution {
+    public String removeKdigits(String num, int k) {
+     Stack<Character> stk = new Stack<>();
+     for(char ch : num.toCharArray()){
+        // normal
+        while(!stk.isEmpty() && k>0 && stk.peek() > ch){
+            stk.pop();
+            k--;
+        }
+        stk.push(ch);
+     }
+     // 12345
+     while(!stk.isEmpty() && k>0 ){
+        stk.pop();
+        k--;
+     }
+     //SB
+     StringBuilder sb = new StringBuilder();
+      while (!stk.isEmpty()) {
+            sb.append(stk.pop());
+        }
+     sb.reverse();
+        int i = 0;
+        while (i < sb.length() && sb.charAt(i) == '0') {
+            i++;
+        }
+
+        String ans = sb.substring(i);
+        return ans.length() == 0 ? "0" : ans;
+    }
+}
