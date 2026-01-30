@@ -239,3 +239,36 @@ class Solution {
         return (int) ans;
     }
 }
+
+//asteroidCollision
+class Solution {
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> stk = new Stack<>();
+        for(int curr : asteroids){
+            boolean distroy = false;
+            while(!stk.isEmpty() && curr <0 && stk.peek() >0 ){
+                if(Math.abs(curr) > Math.abs(stk.peek())){
+                    stk.pop();
+                    continue;
+                }
+                else if(Math.abs(curr) ==  Math.abs(stk.peek())){
+                    stk.pop();
+                }
+                
+                    distroy= true;
+                    break;
+                
+            }
+
+            if(!distroy){
+                stk.push(curr);
+            }
+
+        }
+        int res[] = new int[stk.size()];
+        for(int i = stk.size()-1 ; i >= 0 ; i--){
+            res[i] =stk.pop();
+        }
+        return res ;
+    }
+}
