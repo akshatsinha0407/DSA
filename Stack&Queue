@@ -170,3 +170,72 @@ class Solution {
         return total;
     }
 }
+// by stack
+import java.util.Stack;
+
+class Solution {
+    public int trap(int[] height) {
+        Stack<Integer> st = new Stack<>();
+        int total = 0;
+
+        for (int i = 0; i < height.length; i++) {
+
+            // jab current height badi ho
+            while (!st.isEmpty() && height[i] > height[st.peek()]) {
+
+                int bottom = st.pop();   // valley
+
+                // agar left boundary hi nahi bachi
+                if (st.isEmpty()) break;
+
+                int left = st.peek();    // left boundary
+
+                int width = i - left - 1;
+                int h = Math.min(height[left], height[i]) - height[bottom];
+
+                total += width * h;
+            }
+
+            // choti ya equal height ho to push
+            st.push(i);
+        }
+
+        return total;
+    }
+}
+
+//907. Sum of Subarray Minimums
+class Solution {
+    public int sumSubarrayMins(int[] arr) {
+        long mod = 10000000007L;
+        int n = arr.length;
+        int []nge = new int[n];
+        int []pse = new int[n];
+        Stack<Integer> stk = new Stack<>();
+        //pse
+        for(int i = 0 ; i< n ;i++){
+            while(!stk.isEmpty() && stk.peek() > arr[i]){
+                stk.pop();
+            }
+            pse[i]= stk.isEmpty() ? -1 : stk.peek();
+            stk.push(i);
+        }
+        stk.clear();
+        //nge
+        for(int i = n-1 ; i>=0 ;i--){
+            while(!stk.isEmpty() && stk.peek() >= arr[i]){
+                stk.pop();
+            }
+            nge[i] = stk.isEmpty() ? n : stk.peek() ;
+            stk.push(i);
+        }
+        //calcu 
+        long ans = 0 ;
+        for(int i = 0 ; i < n ; i++){
+            int left = i - pse[i];
+            int right = nge[i] - i ;
+           ans = (ans + (left * right * arr[i] )) % mod;
+        }
+        return (int) ans;
+    }
+}
