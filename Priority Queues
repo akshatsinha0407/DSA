@@ -67,3 +67,22 @@ class Solution {
 
     }
 }
+
+//kthSmallest
+import java.util.PriorityQueue;
+
+class Solution {
+    public int kthSmallest(int[] arr, int k) {
+
+        // Max Heap
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+       
+    for (int num : arr) {
+            pq.add(num);           
+            if (pq.size() > k) {
+                pq.poll(); 
+            }
+        }
+        return pq.peek();
+    }
+}
