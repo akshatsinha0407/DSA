@@ -138,3 +138,31 @@ class Solution {
         return true;
     }
 }
+// 
+import java.util.PriorityQueue;
+
+class Solution {
+    public long minCost(long[] ropes) {
+
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+
+        for (long rope : ropes) {
+            pq.add(rope);
+        }
+
+        long totalCost = 0;
+
+        while (pq.size() > 1) {
+            long first = pq.poll();
+            long second = pq.poll();
+
+            long sum = first + second;
+            totalCost += sum;
+
+            pq.add(sum);
+        }
+
+        return totalCost;
+    }
+}
+
