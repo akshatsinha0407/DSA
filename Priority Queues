@@ -109,3 +109,32 @@ class Solution {
         return dummy.next;
     }
 }
+// Hand
+class Solution {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        if(hand.length % groupSize != 0) return false;
+        HashMap<Integer,Integer> fq = new HashMap<>();
+        for(int card : hand){
+            fq.put(card, fq.getOrDefault(card,0)+1);
+        }
+        PriorityQueue<Integer> pq = new PriorityQueue<>(fq.keySet());
+        while(!pq.isEmpty()){
+            int start= pq.peek();
+            for(int i =0 ; i< groupSize ; i++){
+                int curr = start + i;
+                if(!fq.containsKey(curr)){
+                    return false;
+                }
+                fq.put(curr,fq.get(curr)-1);
+                if(fq.get(curr) == 0 ){
+                    fq.remove(curr);
+                    if(curr != pq.peek()){
+                        return false;
+                    }
+                    pq.poll();
+                }
+            }
+        }
+        return true;
+    }
+}
