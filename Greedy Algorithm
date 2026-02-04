@@ -17,3 +17,44 @@ class Solution {
         return count;
     }
 }
+//
+class Solution {
+
+    double fractionalKnapsack(int W, int[] value, int[] weight, int n) {
+
+        double[] ratio = new double[n];
+        for (int i = 0; i < n; i++) {
+            ratio[i] = (double) value[i] / weight[i];
+        }
+
+        double totalValue = 0.0;
+        int capacity = W;
+
+        while (capacity > 0) {
+
+            int maxIndex = -1;
+            double maxRatio = 0;
+
+            for (int i = 0; i < n; i++) {
+                if (ratio[i] > maxRatio) {
+                    maxRatio = ratio[i];
+                    maxIndex = i;
+                }
+            }
+
+            if (maxIndex == -1) break;
+
+            if (weight[maxIndex] <= capacity) {
+                totalValue += value[maxIndex];
+                capacity -= weight[maxIndex];
+            } else {
+                totalValue += maxRatio * capacity;
+                capacity = 0;
+            }
+
+            ratio[maxIndex] = 0;
+        }
+
+        return totalValue;
+    }
+}
