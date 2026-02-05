@@ -140,3 +140,22 @@ class Solution {
         return flag == 0;
     }
 }
+//
+class Solution {
+    public int jump(int[] nums) {
+        int jump =0, destination=nums.length-1 , lastjumpidx =0, flag=0;
+        if(nums.length == 1) return 0;
+        for(int i =0 ; i<nums.length;i++){
+            flag = Math.max(flag, nums[i]+i);
+
+            if(lastjumpidx == i){
+                lastjumpidx = flag;
+                jump++;
+                if(destination <= flag){
+                    return jump;
+                }
+            }
+        }
+        return jump;
+    }
+}
