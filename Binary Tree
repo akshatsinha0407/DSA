@@ -140,3 +140,18 @@ class Solution {
         return 1+Math.max(left,right);
     }
 }
+//
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return is(root) !=-1;
+    }
+    public int is(TreeNode root) {
+        if(root == null) return 0;
+        int left = is(root.left);
+        int right = is(root.right);
+        if(left==-1 || right == -1) return -1;
+        if(Math.abs(left-right)>1) return -1;
+
+        return 1 + Math.max(left,right);
+    }
+}
