@@ -79,3 +79,22 @@ class Solution {
     return res;
     }
 }
+//
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> stk = new Stack<>();
+        TreeNode curr = root;
+        while(!stk.isEmpty() || curr != null){
+            while(curr != null){
+                stk.push(curr);
+                curr= curr.left;
+            }
+            curr= stk.pop();
+            res.add(curr.val);
+
+            curr = curr.right;
+        }
+        return res;
+    }
+}
