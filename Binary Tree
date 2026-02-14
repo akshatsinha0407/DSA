@@ -310,3 +310,77 @@ class Solution {
         return isMirror(a.left,b.right) && isMirror(a.right,b.left);
      }
 }
+//
+import java.util.*;
+
+class Solution {
+
+    public void printRootToGivenNode(TreeNode root, int target) {
+        List<Integer> path = new ArrayList<>();
+
+        if (dfs(root, target, path)) {
+            System.out.println(path);
+        } else {
+            System.out.println("Node not found");
+        }
+    }
+
+    // DFS function jo batata hai: target mila ya nahi
+    private boolean dfs(TreeNode node, int target, List<Integer> path) {
+
+        // base case
+        if (node == null) return false;
+
+        // current node ko path me add karo
+        path.add(node.val);
+
+        // 🎯 target mil gaya
+        if (node.val == target) {
+            return true;
+        }
+
+        // left ya right me target mila?
+        if (dfs(node.left, target, path) || dfs(node.right, target, path)) {
+            return true;
+        }
+
+        // ❌ target is branch me nahi mila → backtrack
+        path.remove(path.size() - 1);
+        return false;
+    }
+}
+//
+import java.util.*;
+
+class Solution {
+
+    // Main function jo root se call hogi
+    public void printRootToLeaf(TreeNode root) {
+        List<Integer> path = new ArrayList<>();
+        dfs(root, path);
+    }
+
+    // DFS helper function
+    private void dfs(TreeNode node, List<Integer> path) {
+
+        // base case
+        if (node == null) return;
+
+        // 1️⃣ current node ko path me add karo
+        path.add(node.val);
+
+        // 2️⃣ agar leaf node hai → path print karo
+        if (node.left == null && node.right == null) {
+            System.out.println(path);
+        }
+        else {
+            // 3️⃣ left aur right child ke liye DFS
+            dfs(node.left, path);
+            dfs(node.right, path);
+        }
+
+        // 4️⃣ backtracking (important 🔥)
+        // wapas jaate waqt current node ko hata do
+        path.remove(path.size() - 1);
+    }
+}
