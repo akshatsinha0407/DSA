@@ -526,3 +526,34 @@ class Solution {
         return findTarget(node.right, target);
     }
 }
+//
+class Solution {
+    public int countNodes(TreeNode root) {
+        int l = le(root);
+        int r = re(root);
+        if(l == r){
+            return (int)Math.pow(2,l)-1;
+        }
+        else{
+            return 1+ countNodes(root.left)+countNodes(root.right);
+        }
+    }
+    public int le(TreeNode root){
+        if(root == null) return 0;
+        int dep=0;
+        while(root != null){
+            root = root.left;
+            dep++;
+        }
+        return dep;
+    }
+    public int re(TreeNode root){
+        if(root == null) return 0;
+        int dep=0;
+        while(root != null){
+            root = root.right;
+            dep++;
+        }
+        return dep;
+    }
+}
