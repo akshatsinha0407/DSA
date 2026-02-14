@@ -449,3 +449,80 @@ class Solution {
         return ans;
     }
 }
+
+//
+class Solution {
+
+    // parent mapping
+    static Map<Node, Node> parent = new HashMap<>();
+
+    public static int minTime(Node root, int target) {
+
+        // step 1: build parent map
+        buildParent(root, null);
+
+        // find target node
+        Node targetNode = findTarget(root, target);
+
+        // step 2: BFS from target
+        Queue<Node> q = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
+
+        q.add(targetNode);
+        visited.add(targetNode);
+
+        int time = 0;
+
+        while (!q.isEmpty()) {
+
+            int size = q.size();
+            boolean burned = false;
+
+            for (int i = 0; i < size; i++) {
+                Node curr = q.poll();
+
+                if (curr.left != null && !visited.contains(curr.left)) {
+                    visited.add(curr.left);
+                    q.add(curr.left);
+                    burned = true;
+                }
+
+                if (curr.right != null && !visited.contains(curr.right)) {
+                    visited.add(curr.right);
+                    q.add(curr.right);
+                    burned = true;
+                }
+
+                Node par = parent.get(curr);
+                if (par != null && !visited.contains(par)) {
+                    visited.add(par);
+                    q.add(par);
+                    burned = true;
+                }
+            }
+
+            if (burned) time++;
+        }
+
+        return time;
+    }
+
+    // DFS to store parent
+    private static void buildParent(Node node, Node par) {
+        if (node == null) return;
+        parent.put(node, par);
+        buildParent(node.left, node);
+        buildParent(node.right, node);
+    }
+
+    // DFS to find target node
+    private static Node findTarget(Node node, int target) {
+        if (node == null) return null;
+        if (node.data == target) return node;
+
+        Node left = findTarget(node.left, target);
+        if (left != null) return left;
+
+        return findTarget(node.right, target);
+    }
+}
