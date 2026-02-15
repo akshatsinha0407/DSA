@@ -708,3 +708,33 @@ class Solution {
         return result;
     }
 }
+//
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int val) { this.val = val; }
+ * }
+ */
+
+class Solution {
+
+    TreeNode prev = null;
+
+    public void flatten(TreeNode root) {
+
+        if (root == null) return;
+
+        // reverse preorder
+        flatten(root.right);
+        flatten(root.left);
+
+        root.right = prev;
+        root.left = null;
+
+        prev = root;
+    }
+}
+
