@@ -557,3 +557,24 @@ class Solution {
         return dep;
     }
 }
+
+//
+class Solution {
+    int preidx= 0;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return build(preorder , inorder , 0 , inorder.length-1);
+    }
+    public TreeNode build(int[] preorder, int[] inorder,int inst, int inend) {
+        if(inst>inend) return null;
+        int rootval = preorder[preidx++];
+        TreeNode root = new TreeNode(rootval);
+        int mid = inst;
+        while(inorder[mid] != rootval){
+            mid++;
+        }
+        root.left = build(preorder, inorder, inst , mid-1);
+        root.right = build(preorder, inorder , mid+1 , inend);
+
+        return root;
+    }
+}
