@@ -133,3 +133,20 @@ class Solution {
         return tm;
     }
 }
+// 733. Flood Fill
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+      int oldclr = image[sr][sc];
+      if(oldclr == color) return image;
+      dfs(image,sr,sc,oldclr,color);
+      return image;  
+    }
+    public void dfs(int[][]image,int r,int c,int old ,int col){
+        if(r>=image.length || c>=image[0].length ||r<0||c<0 ||image[r][c] != old) return ;
+        image[r][c]=col;
+        dfs(image,r-1,c,old,col);
+        dfs(image,r,c-1,old,col);
+        dfs(image,r+1,c,old,col);
+        dfs(image,r,c+1,old,col);
+    }
+}
