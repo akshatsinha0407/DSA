@@ -463,3 +463,92 @@ class Solution {
         return true;
     }
 }
+
+//dfs topo
+import java.util.*;
+
+class Solution {
+
+    // DFS function
+    private void dfs(int node, boolean[] visited, Stack<Integer> st, List<List<Integer>> adj) {
+        visited[node] = true;
+
+        // go to all neighbours
+        for (int nei : adj.get(node)) {
+            if (!visited[nei]) {
+                dfs(nei, visited, st, adj);
+            }
+        }
+
+        // jab sab neighbours process ho jaye
+        st.push(node);
+    }
+
+    // Topological Sort function
+    public int[] topoSort(int V, List<List<Integer>> adj) {
+        boolean[] visited = new boolean[V];
+        Stack<Integer> st = new Stack<>();
+
+        // call DFS for all components
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                dfs(i, visited, st, adj);
+            }
+        }
+
+        // stack se answer nikalo
+        int[] topo = new int[V];
+        int idx = 0;
+        while (!st.isEmpty()) {
+            topo[idx++] = st.pop();
+        }
+
+        return topo;
+    }
+}
+
+// bfs kahns algo
+import java.util.*;
+
+class Solution {
+
+    public int[] topoSort(int V, List<List<Integer>> adj) {
+
+        int[] indegree = new int[V];
+
+        // Step 1: calculate indegree
+        for (int u = 0; u < V; u++) {
+            for (int v : adj.get(u)) {
+                indegree[v]++;
+            }
+        }
+
+        // Step 2: push nodes with indegree 0
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+
+        // Step 3: BFS
+        int[] topo = new int[V];
+        int idx = 0;
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            topo[idx++] = node;
+
+            for (int nei : adj.get(node)) {
+                indegree[nei]--;
+                if (indegree[nei] == 0) {
+                    q.add(nei);
+                }
+            }
+        }
+
+        return topo;
+    }
+}
+
+//
