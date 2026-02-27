@@ -938,3 +938,66 @@ class Solution {
         return dist;
     }
 }
+
+//////////////////////// shotest path
+import java.util.*;
+
+class Solution {
+
+    class Pair {
+        int row;
+        int col;
+        int dist;
+
+        Pair(int row, int col, int dist) {
+            this.row = row;
+            this.col = col;
+            this.dist = dist;
+        }
+    }
+
+    public int shortestPathBinaryMatrix(int[][] grid) {
+
+        int n = grid.length;
+
+        if (grid[0][0] == 1 || grid[n-1][n-1] == 1)
+            return -1;
+
+        boolean[][] visited = new boolean[n][n];
+
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(0, 0, 1));
+        visited[0][0] = true;
+
+        int[] drow = {-1,0,1,0,-1,-1,1,1};
+        int[] dcol = {0,1,0,-1,-1,1,-1,1};
+
+        while (!q.isEmpty()) {
+
+            Pair curr = q.poll();
+            int row = curr.row;
+            int col = curr.col;
+            int dist = curr.dist;
+
+            if (row == n-1 && col == n-1)
+                return dist;
+
+            for (int i = 0; i < 8; i++) {
+
+                int nrow = row + drow[i];
+                int ncol = col + dcol[i];
+
+                if (nrow >= 0 && ncol >= 0 &&
+                    nrow < n && ncol < n &&
+                    !visited[nrow][ncol] &&
+                    grid[nrow][ncol] == 0) {
+
+                    visited[nrow][ncol] = true;
+                    q.add(new Pair(nrow, ncol, dist + 1));
+                }
+            }
+        }
+
+        return -1;
+    }
+}
